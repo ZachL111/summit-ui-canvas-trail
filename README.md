@@ -1,68 +1,40 @@
 # summit-ui-canvas-trail
 
-`summit-ui-canvas-trail` is a focused Lua codebase around develop a Lua command-oriented project for canvas scenarios with fixture event logs, golden state snapshots, and no credentials or hosted services. It is meant to be easy to inspect, run, and extend without a hosted service.
+`summit-ui-canvas-trail` is a compact Lua repository for frontend apps, centered on this goal: Develop a Lua command-oriented project for canvas scenarios with fixture event logs, golden state snapshots, and no credentials or hosted services.
 
-## Summit UI Canvas Trail Walkthrough
+## Problem It Tries To Make Smaller
 
-I would read the project from the outside in: command, fixture, model, then roadmap. That keeps the frontend apps idea grounded in files that can be checked locally.
+The point is to make a small domain rule concrete enough that a reader can change it and immediately see what broke.
 
-## Reason For The Project
+## Summit UI Canvas Trail Review Notes
 
-I use this kind of project to make a rule visible before adding more machinery around it. The important part here is not the size of the codebase. It is that the input signals, scoring rule, fixture data, and expected output can all be checked in one sitting.
+The first comparison I would make is `view drift` against `view drift` because it shows where the rule is most opinionated.
 
-## Data Notes
+## Working Pieces
 
-The extended cases are not random smoke tests. `degraded` keeps pressure on the review path, while `surge` shows the model when capacity and weight are strong enough to clear the threshold.
+- `fixtures/domain_review.csv` adds cases for view drift and state pressure.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/summit-ui-canvas-walkthrough.md` walks through the case spread.
+- The Lua code includes a review path for `view drift` and `view drift`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## How It Is Put Together
+## Design Notes
 
-The project is organized around a compact model rather than a large framework. Inputs are scored, classified, and checked against golden fixtures. The constants live in code and are mirrored in metadata so documentation drift is easy to catch. The Lua project keeps the module shape simple and validates behavior through a direct script.
+The implementation keeps the scoring rule plain: reward signal and confidence, preserve slack, penalize drag, then classify the result into a review lane.
 
-## Capabilities
+The Lua addition stays small enough to inspect in one sitting.
 
-- Models view models with deterministic scoring and explicit review decisions.
-- Uses fixture data to keep interaction state changes visible in code review.
-- Includes extended examples for layout checks, including `surge` and `degraded`.
-- Documents fixture data tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
-
-## Command Examples
+## Example Run
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Tests
 
-## Check The Work
+That command is also the regression path. It verifies the domain cases and catches mismatches between the CSV, metadata, and code.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
+## Known Limits
 
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Where Things Live
-
-- `src`: primary implementation
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
-
-## Possible Extensions
-
-- Add a comparison mode that shows how decisions change when one signal is adjusted.
-- Add a loader for `examples/extended_cases.csv` and promote selected cases into the language test suite.
-- Add a short report command that prints the score breakdown for a single scenario.
-- Add one more frontend apps fixture that focuses on a malformed or borderline input.
-
-## Tradeoffs
-
-This code is local-first. It makes no claim about deployed usage and avoids credentials, hosted state, and environment-specific setup.
-
-## Getting It Running
-
-Use a normal shell with Lua available on `PATH`. The verifier is written as a PowerShell script because the portfolio was assembled on Windows.
+The fixture set is small enough to audit by hand. The next useful expansion is malformed input coverage, not extra surface area.

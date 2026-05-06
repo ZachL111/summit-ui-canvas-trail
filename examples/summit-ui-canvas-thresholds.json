@@ -1,0 +1,17 @@
+{
+  "repo": "summit-ui-canvas-trail",
+  "thresholds": {
+    "signal": 4,
+    "slack": 1,
+    "confidence": 1,
+    "drag": 3,
+    "ship": 200,
+    "watch": 101
+  },
+  "terms": [
+    "view drift",
+    "state pressure",
+    "layout risk",
+    "interaction cost"
+  ]
+}
